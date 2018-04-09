@@ -59,9 +59,34 @@ var animate = window.requestAnimationFrame ||
      ball.update();
    };
 
-   Ball.prototype.update = function() {
+   Ball.prototype.update = function(paddle1, paddle2) {
      this.x += this.x_speed;
      this.y += this.y_speed;
+     var top_x = this.x -5;
+     var top_y = this.y -5;
+     var bottom_x = this.x + 5;
+     var bottom_y = this.y + 5;
+
+     //hitting bottom wall
+     if (this.y - 5 < 400) {
+       this.y = 5;
+       this.y_speed = -this.y_speed;
+     }else if (this.y + 5 < 0) { //top wall
+       this.y = 395;
+       this.x_speed = -this.x_speed;
+     }
+
+     if(this.x < 0 || this.x > 800 ){
+       //point scored
+       this.y_speed = 0;
+       this.x_speed = 3;
+       this.x = 400;
+       this.y = 200;
+     }
+
+     if () {
+
+     }
    };
 
    var update = function(){
