@@ -53,9 +53,7 @@ var animate = window.requestAnimationFrame ||
      delete keysDown[event.keyCode];
    });
 
-   var update = function() {
-     ball.update(player.paddle, computer.paddle);
-   };
+
 
    Ball.prototype.update = function(paddle1, paddle2) {
      this.x += this.x_speed;
@@ -99,7 +97,24 @@ var animate = window.requestAnimationFrame ||
 
    var update = function(){
      player.update();
+     computer.update(ball);
      ball.update(player.paddle, computer.paddle);
+   };
+
+   Computer.prototype.update = function(ball){
+     var y_pos = ball.y;
+     var diff = - ((this.paddle.y + (this.paddle.width / 2)) - y_pos);
+     if (diff < 0 && diff < -4){
+       diff = -5;
+     }else if (diff > 0 && diff > 4){
+       diff = 5;
+     }
+     this.paddle.move(diff, 0);
+     if (this.paddle.x < 0){
+       this.paddle.x = 0;
+     }else if (this.paddle.y + this.paddle.width > 400) {
+       this.paddle.y = 800 - this.paddle.width;
+     }
    };
 
    Player.prototype.update = function(){
