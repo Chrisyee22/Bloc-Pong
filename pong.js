@@ -10,6 +10,8 @@ var animate = window.requestAnimationFrame ||
    var player = new Player();
    var computer = new Computer();
    var ball = new Ball(400, 200);
+   var message = new Message();
+   var end_game = 11;
 
    canvas.width = width;
    canvas.height = height;
@@ -27,6 +29,7 @@ var animate = window.requestAnimationFrame ||
        player.render();
        computer.render();
        ball.render();
+       message.render(score, ball);
 
     };
 
@@ -57,6 +60,31 @@ var animate = window.requestAnimationFrame ||
      this.player_score = player_score;
      this.computer_score = computer_score;
    }
+
+   function Message(x, y, width, height){
+     this.x = x;
+     this.y = y;
+     this.width = width;
+     this.height = height;
+   }
+
+   Message.prototype.render = function(score, ball){
+     context.font = "bold 60px calibri";
+     context.fillStyle = "#fe0000";
+     context.textAlign = "center";
+
+     if(score.computer_score === end_game) {
+       context.fillText("You Lost", 400, 200);
+       document.getElementById('reloadPage').innerHTML = "Refresh to play again.";
+       ball.x_speed = 0;
+       ball.y_speed = 0;
+     } else if (score.player_score === end_game){
+       context.fillText("You Won!!", 400, 200);
+       document.getElementById('reloadPage').innerHTML = "Refresh to play again.";
+       ball.x_speed = 0;
+       ball.y_speed = 0;
+     }
+   };
 
    Score.prototype.update = function(ball) {
      var reset_ball = function(value) {
@@ -113,6 +141,7 @@ var animate = window.requestAnimationFrame ||
      computer.update(ball);
      ball.update(player.paddle, computer.paddle);
      score.update(ball);
+
    };
 
    Computer.prototype.update = function(ball){
