@@ -6,7 +6,7 @@ var animate = window.requestAnimationFrame ||
 
    var width = 800;
    var height = 400;
-
+   var score = new Score(0, 0);
    var player = new Player();
    var computer = new Computer();
    var ball = new Ball(400, 200);
@@ -53,6 +53,11 @@ var animate = window.requestAnimationFrame ||
      delete keysDown[event.keyCode];
    });
 
+  function Score(player_score, computer_score) {
+     this.player_score = player_score;
+     this.computer_score = computer_score;
+   }
+
 
 
    Ball.prototype.update = function(paddle1, paddle2) {
@@ -72,13 +77,13 @@ var animate = window.requestAnimationFrame ||
        this.y_speed = -this.y_speed;
      }
 
-     if(this.x < 0 || this.x > 800 ){
-       //point scored
-       this.x_speed = -3;
-       this.y_speed = 0;
-       this.x = 400;
-       this.y = 200;
-     }
+     // if(this.x < 0 || this.x > 800 ){
+     //   //point scored
+     //   this.x_speed = -3;
+     //   this.y_speed = 0;
+     //   this.x = 400;
+     //   this.y = 200;
+     // }
 
        if(top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y && top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x){
          //player paddle collision
