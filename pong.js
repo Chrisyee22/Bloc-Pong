@@ -58,7 +58,23 @@ var animate = window.requestAnimationFrame ||
      this.computer_score = computer_score;
    }
 
-
+   Score.prototype.update = function(ball) {
+     var reset_ball = function(value) {
+       value.x = 400;
+       value.y = 200;
+       value.x_speed = 3;
+       value.y_speed = 0;
+     };
+     if (ball.x < 0) {
+       this.computer_score++;
+       document.getElementById('computerScore').innerHTML = this.computer_score;
+       reset_ball(ball);
+     } else if (ball.x > 800) {
+       this.player_score++;
+       document.getElementById('playerScore').innerHTML = this.player_score;
+       reset_ball(ball);
+     }
+   };
 
    Ball.prototype.update = function(paddle1, paddle2) {
      this.x += this.x_speed;
@@ -76,14 +92,6 @@ var animate = window.requestAnimationFrame ||
        this.y = 8;
        this.y_speed = -this.y_speed;
      }
-
-     // if(this.x < 0 || this.x > 800 ){
-     //   //point scored
-     //   this.x_speed = -3;
-     //   this.y_speed = 0;
-     //   this.x = 400;
-     //   this.y = 200;
-     // }
 
        if(top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y && top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x){
          //player paddle collision
@@ -104,6 +112,7 @@ var animate = window.requestAnimationFrame ||
      player.update();
      computer.update(ball);
      ball.update(player.paddle, computer.paddle);
+     score.update(ball);
    };
 
    Computer.prototype.update = function(ball){
