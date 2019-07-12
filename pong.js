@@ -11,7 +11,7 @@ var animate = window.requestAnimationFrame ||
    var computer = new Computer();
    var ball = new Ball(400, 200);
    var message = new Message();
-   var end_game = 11;
+   var end_game = 5;
 
    canvas.width = width;
    canvas.height = height;
